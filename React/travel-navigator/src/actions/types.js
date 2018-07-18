@@ -1,0 +1,4 @@
+export const FETCH_TODOS = 'FETCH_TODOS';
+export const FETCH_USER = 'FETCH_USER';
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_FAIL = 'CREATE_USER_FAIL';
