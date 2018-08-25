@@ -1,5 +1,55 @@
 body {
+  font-size: 62.5%;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+.main-theme {
+  background: #212121;
+}
+header {
+  padding: 15px;
+}
+header .main-title {
+  display: block;
+  color: #fff;
+  font-size: 3rem;
+}
+header, .login-btn-wrapper > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+.login-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.username span {
+  color: #fff;
+  font-size: 12px;
+  font-size: 1.2rem;
+  margin-right: 30px
+}
+.create-account-btn {
+  text-align: right;
+  margin-top: 120px;
+}
+.error-text {
+  color: crimson;
+}
+.success-text {
+  color: limegreen;
+}
+nav {
+  padding: 30px 0;
+}
+nav ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+nav ul li {
+  font-size: 14px;
+  font-size: 1.4rem;
+  text-transform: uppercase;
 }

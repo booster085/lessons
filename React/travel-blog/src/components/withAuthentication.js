@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthUserContext from './AuthUserContext';
-import { firebase } from '../firebase';
+import { firebase, db } from '../firebase';
 
 const withAuthentication = (Component) => {
     class WithAuthentication extends React.Component {
@@ -14,9 +14,18 @@ const withAuthentication = (Component) => {
 
         componentDidMount() {
             firebase.auth.onAuthStateChanged(authUser => {
-                authUser
-                    ? this.setState({authUser})
-                    : this.setState({authUser: null})
+                let username = '';
+                if (!!authUser) {
+                    db.onceGetUsers().then(snapshot => {
+                        authUser.username = snapshot.val()[authUser.uid].username
+                        this.setState({authUser})
+                    })
+                    .catch(error => 
+                        authUser.username = authUser.email
+                    )
+                } else {
+                    this.setState({authUser: null})
+                }
             })
         }
 
