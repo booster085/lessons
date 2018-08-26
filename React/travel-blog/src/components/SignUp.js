@@ -1,29 +1,21 @@
 import React, {Component} from 'react';
-import { 
-    Link,
-    withRouter    
-} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { SignInLink } from './SignIn';
 
 import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 
 const SignUpPage = ({history}) =>
   <div>
-    <h1>SignUp Page</h1>
+    <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>
 
 const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
+    form: {},
+    errors: {},
+    failed: ''
 };
-
-const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -39,79 +31,135 @@ class SignUpForm extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
+    handleChange = (e) => {
+        const element = {
+            name: e.target.name,
+            value: e.target.value
+        }
+        this.setState(prevState => {
+            prevState.form[element.name] = element.value
+            return { form: prevState.form }
+        })
+    }
+    setErrors = (field, msg) => {
+        this.setState(prevState => {
+            prevState.errors[field] = msg
+            return { errors: prevState.errors }
+        })
+    }
+    validateInput = (payload) => {
+        let isFormValid = true
+        if (!payload || typeof payload.email !== 'string' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(payload.email))) {
+            isFormValid = false
+            this.setErrors('email', 'Please provide a correct email address.')
+        }
 
+        if (typeof payload.passwordOne !== 'string' || payload.passwordOne.trim().length < 6) {
+            isFormValid = false
+            this.setErrors('passwordOne', 'Password must have at least 6 characters.')
+        }
+
+        if (typeof payload.username !== 'string' || payload.username.trim().length === 0) {
+            isFormValid = false
+            this.setErrors('username', 'Please provide your name.')
+        }
+        if (payload.passwordTwo !== payload.passwordOne) {
+            isFormValid = false
+            this.setErrors('passwordTwo', 'Password confirmation must be the same as password')
+        }
+        return isFormValid
+    }
     onSubmit = (event) => {
         const {
-            username,
-            email,
-            passwordOne
+            form
         } = this.state;
+        this.setState({errors: {}, failed: null });
         const {
             history
         } = this.props;
-        
-          auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                db.doCreateUser(authUser.user.uid, username, email)
-                    .then(() => {
-                        if (this._isMounted) {
-                            this.setState({ ...INITIAL_STATE });
-                        }
-                        history.push(routes.HOME);
-                    })
-                    .catch(error => {
-                        this.setState(byPropKey('error', error));
-                    })
-            })
-            .catch(error => {
-                this.setState(byPropKey('error', error));
-            });
-      
-          event.preventDefault();      
+        event.preventDefault();
+
+        if(this.validateInput(this.state.form)) {
+            if (this._isMounted) {
+                this.setState({ ...INITIAL_STATE });
+            }
+            auth.doCreateUserWithEmailAndPassword(form.email, form.passwordOne)
+                .then(authUser => {
+                    db.doCreateUser(authUser.user.uid, form.username, form.email)
+                        .then(() => {
+                            // if (this._isMounted) {
+                            //     this.setState({ ...INITIAL_STATE });
+                            // }
+                            history.push(routes.HOME);
+                        })
+                        .catch(error => {
+                            this.setState({failed: error.message});
+                        })
+                })
+                .catch(error => {
+                    this.setState({failed: error.message});
+                });
+        } 
     }
   
     render() {
         const {
-            username,
-            email,
-            passwordOne,
-            passwordTwo,
-            error
+            form
         } = this.state;
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            username === '';
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    value={username}
-                    onChange={event => this.setState(byPropKey('username', event.target.value))}
-                    type="text"
-                    placeholder="Full Name"
-                    />
-                <input
-                    value={email}
-                    onChange={event => this.setState(byPropKey('email', event.target.value))}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    value={passwordOne}
-                    onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    value={passwordTwo}
-                    onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button disabled={isInvalid} type="submit">Sign Up</button>
-                { error && <p>{error.message}</p> }
-            </form>
+            <div>
+                <form onSubmit={this.onSubmit}>
+                    <div className="error-text">{this.state.failed || ''}</div>
+                    <div className="form-group">
+                        <input
+                            className="form-control"
+                            value={form.username}
+                            name="username"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Full Name"
+                            />
+                            <div className="error-text">{this.state.errors.username || ''}</div>
+                    </div>
+                    <div className="form-group">
+                        <input
+                            className="form-control"
+                            value={form.email}
+                            name="email"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Email Address"
+                        />
+                        <div className="error-text">{this.state.errors.email || ''}</div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col">
+                            <input
+                                className="form-control"
+                                value={form.passwordOne}
+                                name="passwordOne"
+                                onChange={this.handleChange}
+                                type="password"
+                                placeholder="Password"
+                            />
+                            <div className="error-text">{this.state.errors.passwordOne || ''}</div>
+                        </div>
+                        <div className="col">
+                            <input
+                                className="form-control"
+                                value={form.passwordTwo}
+                                name="passwordTwo"
+                                onChange={this.handleChange}
+                                type="password"
+                                placeholder="Confirm Password"
+                            />
+                            <div className="error-text">{this.state.errors.passwordTwo || ''}</div>
+                        </div>
+                    </div>
+                    <button className="btn btn-info" type="submit">Sign Up</button>
+                </form>
+                <SignInLink/>
+            </div>
         );
     }
   }

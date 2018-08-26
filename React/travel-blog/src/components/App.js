@@ -5,8 +5,10 @@ import LandingPage from './Landing';
 import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 import PasswordForgetPage from './PasswordForget';
+import PasswordChangeForm from './PasswordChange';
 import HomePage from './Home';
 import AccountPage from './Account';
+import AddTravelPage from './AddTravel';
 import AdminPage from './Admin';
 import Header from './Header';
 
@@ -28,8 +30,10 @@ const App = () =>
                             <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />}/>
                             <Route exact path={routes.SIGN_IN} component={() => <SignInPage />}/>
                             <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />}/>
+                            <Route exact path={routes.PASSWORD_CHANGE} component={() => <PasswordChangeForm />}/>
                             <Route exact path={routes.HOME} component={() => <HomePage />}/>
                             <Route exact path={routes.ACCOUNT} component={() => <AccountPage />}/>
+                            <Route exact path={routes.DIARY_ADD} component={() => <AddTravelPage />}/>
                             <Route exact path={routes.ADMIN} component={() => <AdminPage />}/>
                         </main>
                     </div>

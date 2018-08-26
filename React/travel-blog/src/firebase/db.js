@@ -14,6 +14,11 @@ export const doGetUser = (id) =>
 export const onceGetUsers = () =>
     db.ref('users').once('value');
 
-// Other Entity APIs
+//Travels API
+export const doAddTravel = (uid, item) =>
+    db.ref(`travels/${uid}`).set({
+        
+    });
 
-// Split into db folder db/users and etc
+export const onceGetTravels = () =>
+    db.ref('travels').once('value');

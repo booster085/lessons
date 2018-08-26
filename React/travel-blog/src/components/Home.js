@@ -1,11 +1,17 @@
 import React from 'react';
+import Listing from './listings/Listing';
 import withAuthorization from './withAuthorization';
+import AuthUserContext from './AuthUserContext';
 
 const HomePage = () =>
-  <div>
-    <h1>Home Page</h1>
-    <p>Accessible by all sighed users</p>
-  </div>
+    <div>
+        <div>
+            <h1>All Travels</h1>
+        </div>
+        <div className="listing travel-listing">
+            <Listing />
+        </div>
+    </div>
 
 const authCondition = (authUser) => !!authUser
 

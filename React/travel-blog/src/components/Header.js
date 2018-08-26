@@ -9,7 +9,7 @@ const Header = () =>
         <div className="container">
             <div className="row">
                 <div className="col-md-6">
-                <Link to={routes.LANDING}><span className="main-title">Travel Navigator</span></Link>
+                <Link to={routes.LANDING}><span className="main-title">Travel Diaries</span></Link>
                 </div>
                 <div className="col-md-6 login-btn-wrapper">
                     <AuthUserContext.Consumer>

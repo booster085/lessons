@@ -19,6 +19,7 @@ const NavigationAuth = () =>
 
         <li><Link to={routes.HOME}>Home</Link></li>
         <li><Link to={routes.ACCOUNT}>Account</Link></li>
+        <li><Link to={routes.DIARY_ADD}>Add travel</Link></li>
     </ul>
 
 const NavigationNonAuth = () =>

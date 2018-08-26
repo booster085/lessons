@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
@@ -14,14 +14,10 @@ const SignInPage = ({ history }) =>
         <SignUpLink />
     </div>
 
-const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
-
 const INITIAL_STATE = {
-    email: '',
-    password: '',
-    error: null,
+    form: {},
+    errors: {},
+    failed: ''
 };
 
 class SignInForm extends Component {
@@ -30,66 +26,102 @@ class SignInForm extends Component {
 
         this.state = { ...INITIAL_STATE };
     }
+    handleChange = (e) => {
+        const element = {
+            name: e.target.name,
+            value: e.target.value
+        }
+        this.setState(prevState => {
+            prevState.form[element.name] = element.value
+            return { form: prevState.form }
+        })
+    }
+    setErrors = (field, msg) => {
+        this.setState(prevState => {
+            prevState.errors[field] = msg
+            return { errors: prevState.errors }
+        })
+    }
+    validateInput = (payload) => {
+        let isFormValid = true
+        if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+            isFormValid = false
+            this.setErrors('email', 'Please provide your email address')
+        }
+
+        if (typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+            isFormValid = false
+            this.setErrors('password', 'Please provide your password')
+        }
+        return isFormValid
+    }
 
     onSubmit = (event) => {
         const {
-            email,
-            password,
+            form
         } = this.state;
-
+        this.setState({errors: {}, failed: null });
         const {
             history,
         } = this.props;
-
-        auth.doSignInWithEmailAndPassword(email, password)
-            .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                history.push(routes.HOME);
-            })
-            .catch(error => {
-                this.setState(byPropKey('error', error));
-            });
-
         event.preventDefault();
+        if(this.validateInput(this.state.form)) {
+            this.setState({ ...INITIAL_STATE });
+            auth.doSignInWithEmailAndPassword(form.email, form.password)
+                .then(() => {
+                    history.push(routes.HOME);
+                })
+                .catch(error => {
+                    this.setState({failed: error.message});
+                });
+    
+        }
     }
 
     render() {
         const {
-            email,
-            password,
-            error,
+            form
         } = this.state;
-
-        const isInvalid =
-            password === '' ||
-            email === '';
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input
-                    value={email}
-                    onChange={event => this.setState(byPropKey('email', event.target.value))}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    value={password}
-                    onChange={event => this.setState(byPropKey('password', event.target.value))}
-                    type="password"
-                    placeholder="Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Sign In
-        </button>
-
-                {error && <p>{error.message}</p>}
+                <div className="error-text">{this.state.failed || ''}</div>
+                <div className="form-group">
+                    <input
+                        className="form-control"
+                        value={form.email}
+                        onChange={this.handleChange} name="email"
+                        type="email"
+                        placeholder="Email Address"
+                    />
+                    <div className="error-text">{this.state.errors.email || ''}</div>
+                </div>
+                <div className="form-group">
+                    <input
+                        className="form-control"
+                        value={form.password}
+                        onChange={this.handleChange} name="password"
+                        type="password"
+                        placeholder="Password"
+                    />
+                    <div className="error-text">{this.state.errors.password || ''}</div>
+                </div>
+                <button className="btn btn-info float-right" type="submit">Submit</button>
             </form>
         );
     }
 }
 
+const SignInLink = () =>
+    <p>
+        Allready have an account?
+        {' '}
+        <Link to={routes.SIGN_IN}>Sign In</Link>
+    </p>
+
 export default withRouter(SignInPage);
 
 export {
     SignInForm,
+    SignInLink
 };
