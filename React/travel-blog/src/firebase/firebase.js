@@ -4,12 +4,12 @@ import 'firebase/database';
 import 'firebase/storage';
 
 const config = {
-    apiKey: "AIzaSyAn62nRHaeIXkWaFMBStqjYvZLLmE7e-2A",
-    authDomain: "travel-blog-bd9ca.firebaseapp.com",
-    databaseURL: "https://travel-blog-bd9ca.firebaseio.com",
-    projectId: "travel-blog-bd9ca",
-    storageBucket: "travel-blog-bd9ca.appspot.com",
-    messagingSenderId: "686723386169"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
   };
 
 if (!firebase.apps.length) {
