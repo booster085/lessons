@@ -1,7 +1,7 @@
 import React from 'react';
 import Listing from './listings/Listing';
 import withAuthorization from './withAuthorization';
-import AuthUserContext from './AuthUserContext';
+// import AuthUserContext from './AuthUserContext';
 
 const HomePage = () =>
     <div>

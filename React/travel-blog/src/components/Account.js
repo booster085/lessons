@@ -9,6 +9,7 @@ const AccountPage = () =>
     {authUser =>
       <div>
         <h1>Account: {authUser.email}</h1>
+        <h3>My travel diary</h3>
         <PasswordChangeForm />
       </div>
     }
