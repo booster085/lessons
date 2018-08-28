@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { constants } from 'fs';
-import { Link } from 'react-router-dom';
-import Button from '../buttons/Button';
+
 import { sanitizeInput } from '../helpers/Helper';
 
-import * as routes from '../../constants/routes';
-
 export default class SingleTrave extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return(
@@ -25,7 +18,7 @@ export default class SingleTrave extends Component {
                             dangerouslySetInnerHTML={{ __html: this.props.data.description }}>
                         </div>
                         <div className="img-wrapper">
-                            
+                            { this.props.data.images.map((url, i) => <img key={i} alt="" src={url}/>) }
                         </div>
                     </div>
                 </div> 

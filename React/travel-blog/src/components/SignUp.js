@@ -49,7 +49,7 @@ class SignUpForm extends Component {
     }
     validateInput = (payload) => {
         let isFormValid = true
-        if (!payload || typeof payload.email !== 'string' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(payload.email))) {
+        if (!payload || typeof payload.email !== 'string' || !(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(payload.email))) {
             isFormValid = false
             this.setErrors('email', 'Please provide a correct email address.')
         }

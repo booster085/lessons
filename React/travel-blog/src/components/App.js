@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navigation from './Navigation';
 import LandingPage from './Landing';
 import SignUpPage from './SignUp';
@@ -29,7 +29,6 @@ const App = () =>
                     </div>
                     <div className="col-md-10">
                         <main>
-                            <Route exact path={routes.DIARY_SINGLE} component={ViewTravelPage}></Route>
                             <Route exact path={routes.LANDING} component={() => <LandingPage />}/>
                             <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />}/>
                             <Route exact path={routes.SIGN_IN} component={() => <SignInPage />}/>
@@ -38,6 +37,7 @@ const App = () =>
                             <Route exact path={routes.HOME} component={() => <HomePage />}/>
                             <Route exact path={routes.ACCOUNT} component={() => <AccountPage />}/>
                             <Route exact path={routes.DIARY} component={() => <MyTravelsPage />}/>
+                            <Route exact path={routes.DIARY_SINGLE} component={ViewTravelPage}></Route>
                             <Route exact path={routes.DIARY_ADD} component={() => <AddTravelPage />}/>
                             <Route exact path={routes.ADMIN} component={() => <AdminPage />}/>
                             <Route exact path={routes.CONTACTS} component={() => <Contacts />}/>

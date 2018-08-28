@@ -44,8 +44,7 @@ class PasswordForgetForm extends Component {
     }
     render() {
         const {
-            email,
-            error,
+            error
         } = this.state;
 
         return (

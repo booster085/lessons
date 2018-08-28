@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import TravelItem from './TravelItem';
-import { Link } from 'react-router-dom';
-// import { database } from '../../../node_modules/firebase';
 
 export default class Listing extends Component {
     constructor(props) {
@@ -11,7 +9,7 @@ export default class Listing extends Component {
         }
         this._isMounted = false;
     }
-    componentDidUpdate() {
+    componentDidMount() {
         if (!this._isMounted) {
             this.formatListing(this.props.listingItems)
             this._isMounted = true;
@@ -24,10 +22,11 @@ export default class Listing extends Component {
     }
 
     render() {
+        const { listing } = this.state;
         return(
 
             <div>
-                {this.state.listing}
+                {listing}
             </div>
         )
     }

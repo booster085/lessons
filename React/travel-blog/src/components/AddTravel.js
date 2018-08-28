@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Tiny from './fields/TinyMCE';
 import AuthUserContext from './AuthUserContext';
 import Spinner from './visualComponents/Spinner';
@@ -66,7 +66,7 @@ class AddTravelForm extends Component {
         }
         if (payload.images && typeof payload.images === 'object') {
             let images = payload.images;
-            Object.keys(images).map(i => {
+            Object.keys(images).forEach(i => {
                 if (images[i].type !== 'image/jpeg' && images[i].type !== 'image/png') {
                     isFormValid = false
                     this.setErrors('images', 'Format not allowed');

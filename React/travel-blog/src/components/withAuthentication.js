@@ -14,7 +14,6 @@ const withAuthentication = (Component) => {
 
         componentDidMount() {
             firebase.auth.onAuthStateChanged(authUser => {
-                let username = '';
                 if (!!authUser) {
                     db.onceGetUsers().then(snapshot => {
                         authUser.username = snapshot.val()[authUser.uid].username

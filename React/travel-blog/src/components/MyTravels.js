@@ -32,10 +32,11 @@ class MyTravels extends Component {
     }
 
     render() {
+        const { listing } = this.state;
         return (
             <div className="listing travel-listing">
-                {this.state.fetchInProgress ? <Spinner/> : null}
-                {this.state.listing ? <Listing listingItems={this.state.listing} myList={true}/> : <h2 className='text-primary'>No travels added</h2>}
+                {!listing ? <Spinner/> : null}
+                {listing ? <Listing listingItems={listing} myList={true}/> : <h2 className='text-primary'>No travels added</h2>}
             </div>
         )
     }

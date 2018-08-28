@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { constants } from 'fs';
 import { Link } from 'react-router-dom';
 import Button from '../buttons/Button';
 import { sanitizeInput } from '../helpers/Helper';
@@ -7,9 +6,6 @@ import { sanitizeInput } from '../helpers/Helper';
 import * as routes from '../../constants/routes';
 
 export default class TravelItem extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return(
@@ -33,7 +29,6 @@ export default class TravelItem extends Component {
                         ? <p className="author"><a href="">{sanitizeInput(this.props.data.username)}</a></p>
                         :
                             <div className="manage-btns">
-                                <Link to={routes.DIARY_SINGLE} className="btn btn-info">View</Link>
                                 <Link to={routes.DIARY_EDIT} className="btn btn-warning">Edit</Link>
                                 <Button btnClass="btn btn-danger" btnText="Delete"/>
                             </div>

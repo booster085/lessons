@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Listing from './listings/Listing';
 import AuthUserContext from './AuthUserContext';
-import withAuthorization from './withAuthorization';
+// import withAuthorization from './withAuthorization';
 import Spinner from './visualComponents/Spinner';
 import SingleTravel from './listings/SingleTravel';
 import { db } from '../firebase';
@@ -45,12 +43,12 @@ class ViewTravel extends Component {
             <div className="single-travel-wrapper">
                 <h1>Travel goes here</h1>
                 {this.state.fetchInProgress ? <Spinner/> : null}
-                {this.state.travel ? this.state.travel : <h2 className='text-primary'>No such travels record</h2>}
+                {this.state.travel ? this.state.travel : null}
             </div>
         )
     }
 }
 
-const authCondition = (authUser) => !!authUser;
+// const authCondition = (authUser) => !!authUser;
 
 export default ViewTravelPage;
