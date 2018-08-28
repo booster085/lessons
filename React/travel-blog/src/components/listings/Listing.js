@@ -7,13 +7,14 @@ export default class Listing extends Component {
         this.state = {
             listing: null
         }
-        this._isMounted = false;
+        this._isMounted = false
+        this.listing = this.props.listingItems
     }
     componentDidMount() {
-        if (!this._isMounted) {
-            this.formatListing(this.props.listingItems)
+        // if (!this._isMounted) {
+            this.formatListing(this.listing)
             this._isMounted = true;
-        }
+        // }
     }
     formatListing = (data) => {
         let travels = [];
