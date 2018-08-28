@@ -4,7 +4,12 @@ import 'firebase/database';
 import 'firebase/storage';
 
 const config = {
-    
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
   };
 
 if (!firebase.apps.length) {
