@@ -10,3 +10,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const DIARY = '/diary';
 export const DIARY_ADD = '/diary/add-to-diary';
 export const DIARY_EDIT = '/diary/edit';
+export const DIARY_SINGLE = "/diary/view/:travel";
+export const CONTACTS = '/contacts';

@@ -3,12 +3,15 @@ html, body {
 }
 body {
   font-size: 62.5%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   background: url('./assets/travel-background.jpg') no-repeat;
   background-size: cover;
   background-attachment: fixed;
+}
+body::-webkit-scrollbar { 
+  display: none; 
 }
 .main-theme {
   background: #212121;
@@ -49,7 +52,7 @@ header, .login-btn-wrapper > div {
 }
 nav {
   padding: 30px 0;
-  box-shadow: 10px 0px 10px -3px #999
+  height: 100%;
 }
 nav ul {
   padding-left: 0;
@@ -59,13 +62,26 @@ nav ul li {
   font-size: 14px;
   font-size: 1.4rem;
   text-transform: uppercase;
+  transition: all 1s;
+  border-radius: 5px;
+  padding: 4px 5px
 }
 nav li a {
   color: #212121;
+  transition: all 1s;
+}
+nav li:hover a {
+  color: #fff;
+  text-decoration: none;
+}
+nav li:hover {
+  background: #212121;
+
 }
 main {
-  padding: 30px 15px;
-  text-align: center
+  padding: 35px 40px 100px 30px;
+  text-align: center;
+  min-height: 500px
 }
 .wrapper > .container {
   background: rgba(255,255,255, 0.7)
@@ -115,4 +131,25 @@ main h1 {
   height: 200px;
   background: url('./assets/loading.gif') no-repeat center center;
   background-size: cover;
+  z-index: 99
+}
+.manage-btns .btn {
+  font-size: 14px;
+  width: 50px;
+  padding: 3px 0;
+  font-weight: normal;
+  margin: 8px 8px 0 0;
+}
+.contact-info {
+  font-size: 1.6rem;
+}
+.user-details {
+  text-align: left;
+}
+.user-details p {
+  font-size: 1.6rem;
+  margin: 6px 15px;
+}
+.description {
+  text-align: left;
 }

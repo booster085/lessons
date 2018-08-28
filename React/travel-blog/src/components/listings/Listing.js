@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
 import TravelItem from './TravelItem';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
-import * as routes from '../../constants/routes';
+import { Link } from 'react-router-dom';
+// import { database } from '../../../node_modules/firebase';
 
 export default class Listing extends Component {
     constructor(props) {
         super(props)
-    }
-    getTravels = () => {
-        let travels = [];
-        if (!this.props.filter) {
-            Array.from('teso', x => { 
-                travels.push(<TravelItem key={x}/>)
-            })
+        this.state = {
+            listing: null
         }
-        return travels;
+        this._isMounted = false;
+    }
+    componentDidUpdate() {
+        if (!this._isMounted) {
+            this.formatListing(this.props.listingItems)
+            this._isMounted = true;
+        }
+    }
+    formatListing = (data) => {
+        let travels = [];
+        travels.push(Object.keys(data).map((i) => <TravelItem key={i} postId={i} data={data[i]} public={this.props.myList}/>).reverse())
+        this.setState({listing: travels})
     }
 
     render() {
         return(
-            <Router>
-                <div>
-                    <Route exact path={routes.HOME} component={() => this.getTravels()}/>
-                </div>
-            </Router>
 
+            <div>
+                {this.state.listing}
+            </div>
         )
     }
 }

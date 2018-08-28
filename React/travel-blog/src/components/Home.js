@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Listing from './listings/Listing';
+import Spinner from './visualComponents/Spinner';
 import withAuthorization from './withAuthorization';
-// import AuthUserContext from './AuthUserContext';
+import { db } from '../firebase';
 
 const HomePage = () =>
     <div>
         <div>
-            <h1>All Travels</h1>
-        </div>
-        <div className="listing travel-listing">
-            <Listing />
+            <h2>All Users Travels</h2>
+            <AllTravels/>
         </div>
     </div>
+
+class AllTravels extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            listing: null,
+            fetchInProgress: true
+        }
+        db.onceGetAllTravels().then(snapshot => {
+            this.setState({listing: snapshot.val(), fetchInProgress: false})
+        })
+    }
+
+    render() {
+        return (
+            <div className="listing travel-listing">
+                {this.state.fetchInProgress ? <Spinner/> : null}
+                <Listing listingItems={this.state.listing}/>
+            </div>
+        )
+    }
+}
 
 const authCondition = (authUser) => !!authUser
 

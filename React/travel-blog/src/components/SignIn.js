@@ -8,14 +8,17 @@ import * as routes from '../constants/routes';
 
 const SignInPage = ({ history }) =>
     <div>
-        <h1>SignIn</h1>
+        <h2>SignIn</h2>
         <SignInForm history={history} />
         <PasswordForgetLink />
         <SignUpLink />
     </div>
 
 const INITIAL_STATE = {
-    form: {},
+    form: {
+        email: '',
+        password: ''
+    },
     errors: {},
     failed: ''
 };

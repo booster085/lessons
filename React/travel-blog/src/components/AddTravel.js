@@ -4,12 +4,12 @@ import Tiny from './fields/TinyMCE';
 import AuthUserContext from './AuthUserContext';
 import Spinner from './visualComponents/Spinner';
 
-import { auth, db, storage } from '../firebase';
+import { db } from '../firebase';
 import * as routes from '../constants/routes';
 
 const AddTravelPage = ({history}) =>
   <div>
-    <h1>Add travel to your diary</h1>
+    <h2>Add travel to your diary</h2>
     <AuthUserContext.Consumer>
         {authUser => <AddTravelForm history={history} user={authUser}/>}
     </AuthUserContext.Consumer>
@@ -25,16 +25,7 @@ const INITIAL_STATE = {
 class AddTravelForm extends Component {
     constructor(props) {
       super(props);
-      this._isMounted = false;
       this.state = { ...INITIAL_STATE }
-    }
-    
-    componentDidMount() {
-        this._isMounted = true;
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
     }
 
     handleChange = (e) => {
@@ -102,19 +93,14 @@ class AddTravelForm extends Component {
         event.preventDefault();
 
         if(this.validateInput(this.state.form)) {
-            setTimeout(() => {
-                db.doAddTravel(this.props.user.uid, form.title, form.short, form.description, form.images)
-                    .then(() => {
+            db.doAddTravel(this.props.user, form.title, form.short, form.description, form.images)
+                .then(() => {
                         this.setState({ ...INITIAL_STATE });
-                        history.push(routes.ACCOUNT)
-                    })
-                    .catch(error => {
-                        this.setState({failed: error.message});
-                    });
-                if (this._isMounted) {
-                    this.setState({ ...INITIAL_STATE });
-                }
-            }, 1000)
+                        history.push(routes.DIARY)
+                })
+                .catch(error => {
+                    this.setState({failed: error.message});
+                });
         } else {
             this.setState({fetchInProgress: false});
         }
@@ -146,7 +132,7 @@ class AddTravelForm extends Component {
                     </div>
                     <div className="form-group">
                         <p>Description</p>
-                        <Tiny handleEditorChange={this.handleChange} name='description'/>
+                        <Tiny handleEditorChange={this.handleChange} name='description' height='250px'/>
                         <p className="error-text">{this.state.errors.description || ''}</p>
                     </div>
                     <div className="form-group">

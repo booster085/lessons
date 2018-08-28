@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
 import TinyMCE from 'react-tinymce';
  
-export default class Tiny extends Component {
+class Tiny extends Component {
     constructor(props) {
         super(props)
     }
@@ -17,10 +16,13 @@ export default class Tiny extends Component {
         <TinyMCE
             config={{
             plugins: 'autolink link image lists print preview',
-            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+            height: this.props.height || '150px'
             }}
             onChange={this.handleChange}
         />
         );
     }
 };
+
+export default Tiny;

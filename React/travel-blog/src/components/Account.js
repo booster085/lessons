@@ -5,15 +5,20 @@ import PasswordChangeForm from './PasswordChange';
 import withAuthorization from './withAuthorization';
 
 const AccountPage = () =>
-  <AuthUserContext.Consumer>
-    {authUser =>
-      <div>
-        <h1>Account: {authUser.email}</h1>
-        <h3>My travel diary</h3>
-        <PasswordChangeForm />
-      </div>
-    }
-  </AuthUserContext.Consumer>
+    <AuthUserContext.Consumer>
+        {authUser =>
+            <div>
+                <h2>Account details</h2>
+                <div className="user-details">
+                    <p>Name: {authUser.username}</p>
+                    <p>Email: {authUser.email}</p>
+                    <p>Account created: {new Date(authUser.metadata.creationTime).toLocaleString('bg-BG')}</p>
+                    <p>Last login: {new Date(authUser.metadata.lastSignInTime).toLocaleString('bg-BG')}</p>
+                </div>
+                <PasswordChangeForm />
+            </div>
+        }
+    </AuthUserContext.Consumer>
 
 const authCondition = (authUser) => !!authUser;
 

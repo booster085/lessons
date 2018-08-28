@@ -7,7 +7,7 @@ import * as routes from '../constants/routes';
 
 const SignUpPage = ({history}) =>
   <div>
-    <h1>SignUp</h1>
+    <h2>SignUp</h2>
     <SignUpForm history={history} />
   </div>
 
@@ -87,9 +87,6 @@ class SignUpForm extends Component {
                 .then(authUser => {
                     db.doCreateUser(authUser.user.uid, form.username, form.email)
                         .then(() => {
-                            // if (this._isMounted) {
-                            //     this.setState({ ...INITIAL_STATE });
-                            // }
                             history.push(routes.HOME);
                         })
                         .catch(error => {
