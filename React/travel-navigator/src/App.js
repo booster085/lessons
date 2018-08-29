@@ -20,7 +20,7 @@ class App extends Component {
                     <div className="container">
                         <Route path={SIGN_IN} component={SignInForm}/>
                         <Route path={SIGN_UP} component={SignUpForm}/>
-                        Main content
+                        Main
                     </div>
                 </div>
             </BrowserRouter>
