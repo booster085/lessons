@@ -9,7 +9,7 @@ export default class SingleTrave extends Component {
             <div className="row">
                 <div className="col-sm-12">
                     <div className="description-wrapper">
-                        <h4 className="title">{sanitizeInput(this.props.data.title)}</h4>
+                        <h2 className="title">{sanitizeInput(this.props.data.title)}</h2>
                         {!this.props.public 
                             ? <p className="author"><a href="">{sanitizeInput(this.props.data.username)}</a></p>
                             : null

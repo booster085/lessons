@@ -41,7 +41,6 @@ class ViewTravel extends Component {
     render() {
         return (
             <div className="single-travel-wrapper">
-                <h1>Travel goes here</h1>
                 {this.state.fetchInProgress ? <Spinner/> : null}
                 {this.state.travel ? this.state.travel : null}
             </div>

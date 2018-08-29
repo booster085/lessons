@@ -7,18 +7,21 @@ export default class Listing extends Component {
         this.state = {
             listing: null
         }
-        this._isMounted = false
-        this.listing = this.props.listingItems
+    }
+    handleDelete = (postId) => {
+        this.setState(prevState => {
+            let list = prevState.listing[0].length ? prevState.listing[0].filter((item) => item.key !== postId ) : null
+            return { listing: list }
+        })
+        return this.props.handleDelete(postId)
     }
     componentDidMount() {
-        // if (!this._isMounted) {
-            this.formatListing(this.listing)
-            this._isMounted = true;
-        // }
+        this.formatListing(this.props.listingItems)
     }
     formatListing = (data) => {
         let travels = [];
-        travels.push(Object.keys(data).map((i) => <TravelItem key={i} postId={i} data={data[i]} public={this.props.myList}/>).reverse())
+        travels.push(Object.keys(data).map((i) => 
+            <TravelItem handleDelete={this.handleDelete} key={i} postId={i} data={data[i]} public={this.props.myList}/>).reverse())
         this.setState({listing: travels})
     }
 

@@ -6,6 +6,9 @@ import { sanitizeInput } from '../helpers/Helper';
 import * as routes from '../../constants/routes';
 
 export default class TravelItem extends Component {
+    
+    handleDelete = () =>
+        this.props.handleDelete(this.props.postId)
 
     render() {
         return(
@@ -30,7 +33,7 @@ export default class TravelItem extends Component {
                         :
                             <div className="manage-btns">
                                 <Link to={routes.DIARY_EDIT} className="btn btn-warning">Edit</Link>
-                                <Button btnClass="btn btn-danger" btnText="Delete"/>
+                                <Button btnClass="btn btn-danger" btnText="Delete" onClick={this.handleDelete}/>
                             </div>
                     }
                 </div>

@@ -27,7 +27,14 @@ class MyTravels extends Component {
             fetchInProgress: true
         }
         db.onceGetUserTravels(this.props.user.uid).then(snapshot => {
+            console.log(snapshot)
             this.setState({listing: snapshot.val(), fetchInProgress: false})
+        })
+    }
+    handleDelete = (postId) => {
+        this.setState({fetchInProgress: true})
+        db.doDeleteTravel(postId).then(() => {
+            this.setState({fetchInProgress: false})
         })
     }
 
@@ -35,8 +42,8 @@ class MyTravels extends Component {
         const { listing } = this.state;
         return (
             <div className="listing travel-listing">
-                {!listing ? <Spinner/> : null}
-                {listing ? <Listing listingItems={listing} myList={true}/> : <h2 className='text-primary'>No travels added</h2>}
+                {this.setState.fetchInProgress ? <Spinner/> : null}
+                {listing ? <Listing handleDelete={this.handleDelete} listingItems={listing} myList={true}/> : <h2 className='text-primary'>No travels added</h2>}
             </div>
         )
     }

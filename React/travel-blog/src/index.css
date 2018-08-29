@@ -157,3 +157,9 @@ main h1 {
   max-width: 100%;
   margin: 20px 0;
 }
+
+@media all and (max-width: 767px) {
+  nav {
+    text-align: center;
+  }
+}

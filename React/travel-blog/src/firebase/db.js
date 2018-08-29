@@ -63,13 +63,14 @@ export const doAddTravel = (user, title, short, description, images) => {
 
 }
 
-export const onceGetUserTravels = (uid) => {
-    return db.ref('posts').orderByChild('uid').equalTo(uid).once('value');
-}
+export const doDeleteTravel = (tid) =>
+    db.ref('posts/' + tid).set({})
 
-export const onceGetTravel = (tid) => {
-    return db.ref('posts').orderByKey().equalTo(tid).once('value');
-}
+export const onceGetUserTravels = (uid) =>
+    db.ref('posts').orderByChild('uid').equalTo(uid).once('value');
+
+export const onceGetTravel = (tid) =>
+    db.ref('posts').orderByKey().equalTo(tid).once('value');
 
 export const onceGetAllTravels = () =>
     db.ref('posts').once('value');
